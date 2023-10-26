@@ -1,6 +1,6 @@
 {
-    "name": "hoge",
-    "short_name": "hoge",
+    "name": "flutter_handson_reverpod",
+    "short_name": "flutter_handson_reverpod",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
