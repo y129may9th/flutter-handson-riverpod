@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_handson_reverpod/model/tic_tac_toe.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,7 +8,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,53 +16,46 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      darkTheme: ThemeData.dark(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('FlutterKaigi 2023 - TicTacToe'),
+        ),
+        body: const Board(),
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+class Board extends StatefulWidget {
+  const Board({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<Board> createState() => _BoardState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class _BoardState extends State<Board> {
+  /// ゲーム進行状態の初期値
+  TicTacToe ticTacToe = TicTacToe.start(playerX: 'Dash', playerO: 'Sparky');
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    /// コンテンツを列方向(縦並び)に配置する Column を Padding でラップ（ここから）
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, //横方向のマス個数（３個）
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+            itemCount: 9, //縦横のマス個数（３×３）
+            itemBuilder: (context, index) {
+              return const SizedBox.expand(); //マス目に空欄を確保するだけのダミー
+            },
+          ),
+        ],
       ),
     );
   }
