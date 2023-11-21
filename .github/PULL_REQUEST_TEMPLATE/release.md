@@ -1,2 +1,2 @@
 ## やったこと
-- release
+- release template
